@@ -1,0 +1,59 @@
+<!--admin.ejs-->
+<table class="table">
+    <tr>
+        <th>ID</th>
+        <th>Title</th>
+        <th>Restaurant</th>
+        <th>Update</th>
+        <th>Delete</th>
+        <th>Members</th>
+    </tr>
+    <% coupon.forEach(function (item) { %>
+        <tr>
+            <td>
+                <%= item.id %>
+            </td>
+            <td>
+                <b>
+                    <a href="/Coupon/detail/<%= item.id %>">
+                        <%= item.title %>
+                    </a>
+                </b>
+            </td>
+            <td>
+                <%= item.rest %>
+            </td>
+            <td>
+                <a href="/Coupon/update/<%= item.id %>">Update</a>
+            </td>
+            <td>
+                <button type="button" class="btn btn-primary" onclick="deleteCoupon('<%= item.id %>')">Delete</button>
+            </td>
+            <td>
+                <a href="/User/showMember/<%= item.id %>">Members</a>
+            </td>
+        </tr>
+        <% }); %>
+</table>
+
+<script>
+    function deleteCoupon(id) {
+        
+        var r = confirm("Confirm Delete?");
+        if (r == true) {
+
+            var xhr = new XMLHttpRequest();
+            xhr.open("POST", "/Coupon/delete/" + id, true);
+            xhr.onload = function (e) {
+                var jsonResponse = JSON.parse(this.responseText);
+                alert(jsonResponse.message);
+                location.reload(true);
+            };
+            xhr.send();
+
+        } else {
+            alert("cancelled");
+        }
+
+    } 
+</script>

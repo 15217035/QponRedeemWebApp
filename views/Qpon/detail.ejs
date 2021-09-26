@@ -1,0 +1,99 @@
+<!-- detail -->
+<!-- <div  style="margin-right:3%;"> -->
+    <%
+    var date = coupon.dealDate;
+    var year = date.getFullYear();
+    var month = date.getMonth() + 1;
+    var dt = date.getDate();
+
+    if (dt < 10) {
+        dt = '0' + dt;
+    }
+    if (month < 10) {
+        month = '0' + month;
+    }
+
+    var dealDateThis = year+'-' + month + '-'+dt;
+    %>
+<div class="row">
+    <div class="col-12 col-lg-5">
+        <img style="width:100%;" src="<%= coupon.image %>" alt="image of <%=coupon.rest %>"></img>
+    </div>
+    <div class="col-12 col-lg-7">
+        <ul class="list-group">
+            <li class="list-group-item">
+                <b>
+                    <%= coupon.rest %>
+                </b>
+            </li>
+            <li class="list-group-item">
+                <b>
+                    <%= coupon.title %>
+                </b>
+            </li>
+            <li class="list-group-item">
+                <b>Coins: </b>
+                <%= coupon.coin %>
+            </li>
+            <li class="list-group-item">
+                <b>Address: </b>
+                <%= coupon.mall+", "+coupon.dist %>
+            </li>
+            <li class="list-group-item">
+                <b>Valid Till: </b>
+                <%= dealDateThis %>
+            </li>
+            <li class="list-group-item">
+                <%= coupon.detail %>
+            </li>
+        </ul>
+    </div>
+</div>
+<br>
+
+<button type="submit" id="button" hidden class="btn btn-primary btn-lg btn-block" onclick="redeemCoupon('<%= coupon.id %>')">Redeem</button>
+<script>
+    function btn2Clicked(elem) {
+        elem.style = "display:none";
+        // elem.innerHTML = "It's gone";
+    };
+
+    window.onload = function () {
+        if ('<%= req.session.role %>' == "member")
+            // btn2Clicked(document.getElementById("button"));
+            if ('<%=!isRedeem %>' == 'true')
+                document.getElementById("button").hidden = false;
+
+    }
+
+</script>
+<script>
+    function redeemCoupon(id) {
+
+        var r = confirm("Confirm redeem?");
+        if (r == true) {
+
+            var xhr = new XMLHttpRequest();
+            xhr.open("POST", "/User/redeemCoupon/" + id, true);
+            xhr.onload = function (e) {
+
+                var jsonResponse = JSON.parse(this.responseText);
+
+                if (jsonResponse.message == "Coupon is added to your acc.") {
+                    alert(jsonResponse.message);
+                    location.reload(true);
+                } else {
+                    alert(jsonResponse.message);
+
+                }
+            };
+            //btn2Clicked("button");
+            xhr.send();
+
+        } else {
+            alert("cancelled");
+        }
+
+    }
+
+</script>

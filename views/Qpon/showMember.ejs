@@ -1,0 +1,21 @@
+<!--showMember.ejs-->
+<table class="table">
+    <tr>
+        <th>ID</th>
+        <th>User Name</th>
+        <th>Coin Remained</th>
+    </tr>
+    <% users.forEach(function (item) { %>
+        <tr>
+            <td>
+                <%= item.id %>
+            </td>
+            <td>
+                <%= item.username %>
+            </td>
+            <td>
+                <%= item.coinOwned %>
+            </td>
+        </tr>
+        <% }); %>
+</table>

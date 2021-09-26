@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Q-pon</title>
+
+  <!-- Viewport mobile tag for sensible mobile support -->
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+  <!--
+        Stylesheets and Preprocessors
+        ==============================
+
+        You can always bring in CSS files manually with `<link>` tags, or asynchronously
+        using a solution like AMD (RequireJS).  Or, if you like, you can take advantage
+        of Sails' conventional asset pipeline (boilerplate Gruntfile).
+
+        By default, stylesheets from your `assets/styles` folder are included
+        here automatically (between STYLES and STYLES END). Both CSS (.css) and LESS (.less)
+        are supported. In production, your styles will be minified and concatenated into
+        a single file.
+
+        To customize any part of the built-in behavior, just edit `tasks/pipeline.js`.
+        For example, here are a few things you could do:
+
+            + Change the order of your CSS files
+            + Import stylesheets from other directories
+            + Use a different or additional preprocessor, like SASS, SCSS or Stylus
+    -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/css/bootstrap.min.css" integrity="sha384-Zug+QiDoJOrZ5t4lssLdxGhVrurbmBWopoEl+M6BdEfwnCJZtKxi1KgxUyJq13dy"
+    crossorigin="anonymous">
+  <!--STYLES-->
+  <link rel="stylesheet" href="/styles/importer.css">
+  <!--STYLES END-->
+</head>
+
+<body>
+  <div class="container">
+    <nav class="navbar navbar-expand navbar-default navbar-fixed-top navbar-light bg-light">
+      <ul class="nav navbar-nav">
+        <a class="navbar-brand" href="#">Q-pon</a>
+        <a class="nav-link <%=req.path=='/Coupon/home' ? 'active':'' %>" href="/Coupon/home">Home</a>
+        <a class="nav-link <%=req.path=='/Coupon/search' ? 'active':'' %>" href="/Coupon/search">Search</a>
+
+        <% if(req.session.role =='admin') 
+        { %>
+          <a class="nav-link <%=req.path=='/Coupon/create' ? 'active':'' %>" href="/Coupon/create">Create</a>
+          <a class="nav-link <%=req.path=='/Coupon/admin' ? 'active':'' %>" href="/Coupon/admin">Admin</a>
+          <% } %>
+
+            <% if(req.session.role =='member') 
+        { %>
+              <a class="nav-link <%=req.path=='/User/myCoupon' ? 'active':'' %>" href="/User/myCoupon">My Qpon</a>
+              <% } %>
+      </ul>
+      <ul class="nav navbar-nav navbar-right ml-auto">
+        <% if(req.session.role !='admin' && req.session.role !='member')  { %>
+          <a class="nav-link" href="/User/login">Login</a>
+          <% } else { %>
+            <span class="navbar-text">
+              hi,
+              <%= req.session.username %>! (
+                <a class="navbar-link" href="#" onclick="logoutPop();">Logout</a>)</span>
+
+            <% } %>
+      </ul>
+    </nav>
+
+    <div class="jumbotron">
+      <h1>Q-pon</h1>
+      <p>Redeem your coins for dining coupons.</p>
+    </div>
+
+
+    <%- body %>
+  </div>
+
+
+  <!--
+        Client-side Templates
+        ========================
+
+        HTML templates are important prerequisites of modern, rich client applications.
+        To work their magic, frameworks like Backbone, Angular, Ember, and Knockout require
+        that you load these templates client-side.
+
+        By default, your Gruntfile is configured to automatically load and precompile
+        client-side JST templates in your `assets/templates` folder, then
+        include them here automatically (between TEMPLATES and TEMPLATES END).
+
+        To customize this behavior to fit your needs, just edit `tasks/pipeline.js`.
+        For example, here are a few things you could do:
+
+            + Import templates from other directories
+            + Use a different template engine (handlebars, jade, dust, etc.)
+            + Internationalize your client-side templates using a server-side
+              stringfile before they're served.
+    -->
+
+  <!--TEMPLATES-->
+  
+  <!--TEMPLATES END-->
+
+
+  <!--
+
+      Client-side Javascript
+      ========================
+
+      You can always bring in JS files manually with `script` tags, or asynchronously
+      on the client using a solution like AMD (RequireJS).  Or, if you like, you can
+      take advantage of Sails' conventional asset pipeline (boilerplate Gruntfile).
+
+      By default, files in your `assets/js` folder are included here
+      automatically (between SCRIPTS and SCRIPTS END).  Both JavaScript (.js) and
+      CoffeeScript (.coffee) are supported. In production, your scripts will be minified
+      and concatenated into a single file.
+
+      To customize any part of the built-in behavior, just edit `tasks/pipeline.js`.
+      For example, here are a few things you could do:
+
+          + Change the order of your scripts
+          + Import scripts from other directories
+          + Use a different preprocessor, like TypeScript
+
+    -->
+    <script>
+        function logoutPop() {
+            var xhr = new XMLHttpRequest();
+            xhr.open("POST", "/User/logout/", true);
+            xhr.onload = function () {
+                if (xhr.responseText == "Log out successfully.") {
+                    alert(xhr.responseText);
+                    window.location = "/";
+                    // location.reload(true);
+                }
+                else {
+                    alert(xhr.responseText);
+                }
+            }
+            xhr.send();
+        }
+    </script>
+
+  <!--SCRIPTS-->
+  <script src="/js/dependencies/sails.io.js"></script>
+  <!--SCRIPTS END-->
+
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+    crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+    crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/js/bootstrap.min.js" integrity="sha384-a5N7Y/aK3qNeh15eJKGWxsqtnX/wWdSZSKp+81YjTmS15nvnvxKHuzaWwXHDli+4"
+    crossorigin="anonymous"></script>
+
+  <!-- Bootstrap Date-Picker Plugin -->
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.7.1/js/bootstrap-datepicker.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.7.1/css/bootstrap-datepicker.css"
+  />
+
+  <!-- Include Ion Ranger -->
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/ion-rangeslider/2.2.0/js/ion.rangeSlider.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/ion-rangeslider/2.2.0/css/ion.rangeSlider.css"
+  />
+  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/ion-rangeslider/2.2.0/css/ion.rangeSlider.skinHTML5.min.css"
+  />
+
+</body>
+
+</html>

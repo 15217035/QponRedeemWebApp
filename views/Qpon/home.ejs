@@ -1,0 +1,87 @@
+<!--home-->
+<style>
+.card-img-top {
+    width: 100%;
+    height: 15vw;
+    object-fit: cover;
+}
+</style>
+<div class="row">
+    <div class="col-12 col-lg-4">
+        <h5>New Territories</h5>
+        <% couponNT.forEach (function (item){ %>
+            <div class="card">
+                <img class="card-img-top" id="image" src="<%= item.image %>" alt="Card image cap">
+                <div class="card-body">
+                    <h5 class="card-title">
+                        <b>
+                            <a href="/Coupon/detail/<%= item.id %>">
+                                <%= item.rest %>
+                            </a>
+                        </b>
+                    </h5>
+                    <p class="card-text">
+                        <%= item.title %>
+                    </p>
+                    <p class="card-text">Coins:
+                        <%= item.coin %>
+                    </p>
+                </div>
+            </div>
+            <br>
+            <% }); %>
+
+    </div>
+    <div class="col-12 col-lg-4">
+        <h5>Kowloon</h5>
+        <% couponKLN.forEach(function (item){ %>
+            <div class="card">
+                <img class="card-img-top" src="<%= item.image %>" alt="Card image cap">
+                <div class="card-body">
+                    <h5 class="card-title">
+                        <b>
+                            <a href="/Coupon/detail/<%= item.id %>">
+                                <%= item.rest %>
+                            </a>
+                        </b>
+                    </h5>
+                    <p class="card-text">
+                        <%= item.title %>
+                    </p>
+                    <p class="card-text">Coins:
+                        <%= item.coin %>
+                    </p>
+                </div>
+            </div>
+            <br>
+            <%  }); %>
+
+
+    </div>
+
+    <div class="col-12 col-lg-4">
+        <h5>Hong Kong Island</h5>
+        <% couponHKI.forEach(function (item){ %>
+            <div class="card">
+                <img class="card-img-top" src="<%= item.image %>" alt="Card image cap">
+                <div class="card-body">
+                    <h5 class="card-title">
+                        <b>
+                            <a href="/Coupon/detail/<%= item.id %>">
+                                <%= item.rest %>
+                            </a>
+                        </b>
+                    </h5>
+                    <p class="card-text">
+                        <%= item.title %>
+                    </p>
+                    <p class="card-text">Coins:
+                        <%= item.coin %>
+                    </p>
+                </div>
+            </div>
+            <br>
+            <% }); %>
+    </div>
+    <br>
+</div>

@@ -1,0 +1,108 @@
+<!--create.ejs-->
+<form action="/Coupon/create" method="POST" onsubmit="return tryArray(this);">
+
+    <div class="row">
+        <div class="col-12 col-lg-6 form-group">
+            <label>Title:</label>
+            <input required type="text" class="form-control" name="Coupon[title]">
+            <label>Restaurant:</label>
+            <input required type="text" class="form-control" name="Coupon[rest]">
+            <label>District:</label>
+            <select class="form-control" id="dist" onchange="distSelected(this.value)" name="Coupon[dist]">
+                <option value="nan">Please select:</option>
+                <option value="hki">Hong Kong Island</option>
+                <option value="kln">Kowloon</option>
+                <option value="nt">New Territories</option>
+            </select>
+            <label>Mall:</label>
+            <select class="form-control" id="malls" disabled name="Coupon[mall]">
+            </select>
+            <label>Image:</label>
+            <input required type="text" class="form-control" name="Coupon[image]">
+        </div>
+
+        <div class="col-12 col-lg-6 form-group">
+            <label>Coin:</label>
+            <input required type="number" class="form-control" name="Coupon[coin]">
+            <label>Deal valid till:</label>
+            <div class="input-group date" data-provide="datepicker" data-date-start-date="+0d">
+                <input required type="text" class="form-control" name="Coupon[dealDate]">
+                <div class="input-group-addon">
+                    <span class="glyphicon glyphicon-th"></span>
+                </div>
+            </div>
+            <label>Quata:</label>
+            <input required type="number" class="form-control" name="Coupon[quota]">
+            <label>Detail:</label>
+            <textarea required  rows="4" type="text" class="form-control" name="Coupon[detail]"></textarea>
+        </div>
+    </div>
+    <button type="submit" class="btn btn-primary">Submit</button>
+
+    <script>
+        var hki = ["IFC", "金鐘太古廣場", "時代廣場", "銅鑼灣世貿中心",
+            "太古城中心", "杏花新城商場", "數碼港商場"];
+        var kln = ["圓方", "Elements Harbour City", "海港城",
+            "美麗華商場", "黃埔新天地", "又一城", "朗豪坊商場", "新世紀廣場",
+            "奧海城", "MegaBox", "德福廣場商場", "荷里活廣場", "APM"];
+        var nt = ["荃新天地", "荃灣廣場", "悅來坊商場", "綠楊坊商場", "新都會廣場",
+            "青衣城商場", "屯門市廣場", "東港城", "君薈坊商場", "連理街",
+            "沙田新城市廣場", "大埔超級城"]
+
+        function distSelected(dist) {
+            var string = "";
+
+            malls.disabled=false;
+            switch (dist) {
+                case "hki":
+                    for (mall of hki) {
+                        string += '<option value="' + mall + '">' + mall + '</option>';
+                    }
+                    break;
+
+                case "nt":
+                    for (mall of nt) {
+                        string += "<option value=\"" + mall + "\">" + mall + "</option>";
+                    }
+                    break;
+
+                case "kln":
+                    for (mall of kln) {
+                        string += "<option value=\"" + mall + "\">" + mall + "</option>";
+                    }
+                    break;
+
+                default:
+                    document.getElementById("malls").disabled = true;
+            }
+
+            document.getElementById("malls").innerHTML = string;
+
+        }
+    </script>
+
+</form>
+<script>
+    function tryArray(oFormElement) {
+
+        var customFormData = "";
+        Object.keys(oFormElement).forEach(function (data) {
+            customFormData += encodeURI(oFormElement[data].name) + "=" + encodeURI(oFormElement[data].value) + "&";
+        })
+
+        var xhr = new XMLHttpRequest();
+        xhr.onload = function () {
+            if (xhr.responseText == "Successfully Created!") {
+                alert(xhr.responseText);
+                window.location = "/Coupon/create";
+            }
+            else {
+                alert(xhr.responseText);
+            }
+        }
+        xhr.open(oFormElement.method, oFormElement.action, true);
+        xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+        xhr.send(customFormData + "a");
+        return false;
+    }
+</script>

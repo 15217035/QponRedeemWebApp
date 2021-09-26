@@ -1,0 +1,108 @@
+<!-- search -->
+<style>
+    .card-img-top {
+        width: 100%;
+        height: 15vw;
+        object-fit: cover;
+    }
+</style>
+<div class=row>
+    <div class="col-12 col-lg-8">
+        <div class=row>
+            <% coupons.forEach (function (item){ %>
+                <div class="col-12 col-lg-6">
+                    <div class="card">
+                        <img class="card-img-top" src="<%= item.image %>" alt="Card image cap">
+                        <div class="card-body">
+                            <h5 class="card-title">
+                                <b>
+                                    <a href="/Coupon/detail/<%= item.id %>">
+                                        <%= item.rest %>
+                                    </a>
+                                </b>
+                            </h5>
+                            <p class="card-text">
+                                <%= item.title %>
+                            </p>
+                            <p class="card-text">Coins:
+                                <%= item.coin %>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <% }); %>
+        </div>
+        <br>
+        <% const current = Number(req.query.page); %>
+            <nav aria-label="Page navigation example">
+                <ul <%=coupons.length==0 ? 'hidden': '' %> class="pagination">
+                    <li class="page-item">
+                        <a class="page-link" href="/Coupon/search?dist=<%= req.query.dist %>&coin=<%= req.query.coin%>&dealDate=<%= req.query.dealDate%>&page=<%= Math.max(current-1, 1) %>">Previous</a>
+                    </li>
+
+                    <% for (i = 1; i <= count; i++) { %>
+                        <li class="page-item">
+                            <a class="page-link" href="/Coupon/search?dist=<%= req.query.dist %>&coin=<%= req.query.coin%>&dealDate=<%= req.query.dealDate%>&page=<%= i %>">
+                                <%= i %>
+                            </a>
+                        </li>
+                        <% } %>
+
+                            <li class="page-item">
+                                <a class="page-link" href="/Coupon/search?dist=<%= req.query.dist %>&coin=<%= req.query.coin%>&dealDate=<%= req.query.dealDate%>&page=<%= Math.min(current+1, count) %>">Next</a>
+                            </li>
+                </ul>
+            </nav>
+    </div>
+    <form class="col-12 col-lg-4" action="/Coupon/search" method="GET">
+        <div class="form-group">
+            <h5>
+                <b>Search</b>
+            </h5>
+            <label>
+                <b>Districts</b>
+            </label>
+            <select class="form-control" name="dist">
+                <option <%= req.query.dist=="all"?'selected':''%>  value="all">All Districts</option>
+                <option <%= req.query.dist=="hki"?'selected':''%> value="hki">Hong Kong Island</option>
+                <option <%= req.query.dist=="kln"?'selected':''%> value="kln">Kowloon</option>
+                <option <%= req.query.dist=="nt"?'selected':''%> value="nt">New Territories</option>
+            </select>
+            <br>
+            <label>
+                <b>Coins Range</b>
+            </label>
+            <div>
+                <input class="form-control" id="coinRange" type="text" name="coin" value="<%=req.query.coin%>">
+            </div>
+            <br>
+            <label>
+                <b>Vaild Before</b>
+            </label>
+            <div class="input-group date" data-provide="datepicker">
+                <input type="text" class="form-control" name="dealDate"  value='<%=(req.query.dealDate || "")%>' >
+                <div class="input-group-addon">
+                    <span class="glyphicon glyphicon-th"></span>
+                </div>
+            </div>
+            <input type="hidden" name="page" value=1>
+            <br>
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </div>
+
+    </form>
+</div>
+
+<script type="text/javascript">
+
+    window.onload = function () {
+        $("#coinRange").ionRangeSlider({
+            type: "double",
+            grid: true,
+            min: 0,
+            max: 10000,
+            from: 10
+        });
+    }
+
+</script>

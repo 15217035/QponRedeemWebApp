@@ -1,0 +1,56 @@
+<style>
+    .card-img-top {
+        width: 100%;
+        height: 15vw;
+        object-fit: cover;
+    }
+</style>
+<div class="d-flex">
+    <div>
+        <h5>My Qpon</h5>
+    </div>
+    <div class="ml-auto">
+        Account Balance:
+        <%=userCoinOwned %>
+    </div>
+</div>
+<div class="row">
+    <% coupons.forEach (function (item){ %>
+        <%
+        var date = item.dealDate;
+        var year = date.getFullYear();
+        var month = date.getMonth() + 1;
+        var dt = date.getDate();
+    
+        if (dt < 10) {
+            dt = '0' + dt;
+        }
+        if (month < 10) {
+            month = '0' + month;
+        }
+    
+        var dealDateThis = year+'-' + month + '-'+dt;
+        %>
+        <div class="col-12 col-lg-4">
+            <div class="card">
+                <img class="card-img-top" id="image" src="<%= item.image %>" alt="Card image cap">
+                <div class="card-body">
+                    <h5 class="card-title">
+                        <b>
+                            <a href="/Coupon/detail/<%= item.id %>">
+                                <%= item.rest %>
+                            </a>
+                        </b>
+                    </h5>
+                    <p class="card-text">
+                        <%= item.title %>
+                    </p>
+                    <p class="card-text">Expiry Date:
+                        <%= dealDateThis %>
+                    </p>
+                </div>
+            </div>
+            <br>
+        </div>
+        <% }); %>
+</div>
