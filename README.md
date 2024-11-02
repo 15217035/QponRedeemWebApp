@@ -1,39 +1,58 @@
-# QponRedeemWebApp
+# Qpon Redeem Web App
 
-a [Sails](http://sailsjs.org) application
+This web application allows visitors to redeem coupons and administrators to manage them. It's built using the Sails.js framework and incorporates technologies like Node.js, Express.js, and AngularJS.
 
-## Framework
-1. Node
-2. Sails
-- Waterline(ORM)
-- MVC framework
-3. ExpressJs
-- Acted as HTTP server
-- Http reqest body parser
-- Routing
-- Template Engine
-4. AngularJs
-5. Bootstrap
+## Features
 
-## Concept
-MEAN stack
-- Frontend 
-  - AngularJs
-- Backend
-  - ExpressJs
-  - Node
-  - MongoDB
+**For Visitors:**
 
-## Functions
-1. View Qpon
-2. Search Qpon
-3. Admin
-- Create new Qpon
-- Update Qpon
-- Delete Qpon
-4. User
-- Redeem Qpon
+* **Browse Coupons:** View available coupons with details.
+* **Search:** Easily find specific coupons.
+* **Redeem:** Redeem coupons using accumulated points.
 
-## To be implemented
-1. MongoDB
-2. investigate role of AngularJs
+**For Administrators:**
+
+* **Coupon Management:**
+    * Create new coupons.
+    * Update existing coupon details.
+    * Delete coupons.
+
+
+## Tech Stack
+
+* **Backend:**
+    * Node.js
+    * Sails.js
+        * Waterline (ORM)
+        * MVC Framework
+    * Express.js
+        * HTTP server
+        * Request body parsing
+        * Routing
+        * Template engine (EJS)
+* **Frontend:**
+    * AngularJS
+    * Bootstrap
+
+## Installation
+
+1. **Clone the repository:** `git clone <repository_url>`
+2. **Install dependencies:** `npm install`
+3. **Start the server:** `npm start`
+
+## Usage
+
+1. **Access the application:** Open your browser and navigate to `http://localhost:1337` (or the appropriate port).
+2. **For visitors:** Browse coupons, search for specific ones, and redeem them with points.
+3. **For administrators:** Log in with admin credentials to manage coupons.
+
+## Future Improvements
+
+* **Database Integration:**  Integrate with MongoDB for persistent data storage.
+* **Enhanced Frontend:** Explore further use of AngularJS to improve user experience and interactivity.
+* **Security:** Implement robust security measures to protect user data and prevent unauthorized access.
+* **Testing:** Develop comprehensive tests to ensure application stability and functionality.
+
+## Contributing
+
+## License
